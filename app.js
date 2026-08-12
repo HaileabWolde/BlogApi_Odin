@@ -17,7 +17,8 @@ const  app = express();
 
 
 // Pass the global passport object into the configuration function
-//require('./config/passport');
+
+require('./config/passport')
 
 // This will initialize the passport object on every request
 app.use(passport.initialize());
