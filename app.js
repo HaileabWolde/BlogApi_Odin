@@ -1,16 +1,12 @@
+require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const passport = require('passport');
 
-/**
- * -------------- GENERAL SETUP ----------------
- */
 
-// Gives us access to variables set in the .env file via `process.env.VARIABLE_NAME` syntax
-require('dotenv').config();
-
+const indexRouter = require('./routes/indexRouter');
 // Create the Express application
 const  app = express();
 
@@ -38,8 +34,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 /**
  * -------------- ROUTES ----------------
  */
+app.use("/", indexRouter);
+app.use((req,res)=>{
+    res.status(400).send('Page not found')
+})
 
-
+// Keep this as is for real server errors
+/*
+app.use((err, req, res, next) => {
+  console.log(err)
+    res.status(400).render("partials/errorPage");
+   
+});*/
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (error) => {
   // This is important!
