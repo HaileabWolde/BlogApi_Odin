@@ -11,7 +11,8 @@ indexRouter.get('/', (req, res)=> {
 })
 
 indexRouter.get('/protected', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-    res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
+    
+    res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!", user: req.user});
 });
 indexRouter.post('/signup', async function(req, res, next){
       // Use req.body directly instead of matchedData
