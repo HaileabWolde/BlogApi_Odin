@@ -17,7 +17,17 @@ async function  handleSubmit (e) {
    try{
       const response = await axios.post('http://localhost:3000/login', formData)
     
-      console.log(response.data)
+      const {token , role } = response.data
+      if (role !== 'AUTHOR' && role !== 'ADMIN') {
+                // Valid user but not an author
+                setError('You are not authorized to access this dashboard')
+                return
+            }
+
+            // Success — save token and redirect
+            localStorage.setItem('token', token)
+            navigate('/dashboard')
+
    }
    catch(err){
    const message =

@@ -7,7 +7,8 @@ import Dashboard from '../pages/dashboard.jsx';
 const routes = [
   {
    path: "/", 
-   element: <Navigate to="/login" replace />,
+   element:   localStorage.getItem('token') ?  <Navigate to="/dashboard" replace />: 
+   <Navigate to="/login" replace />,
     errorElement: <ErrorPage />,
   },
   {
@@ -18,7 +19,7 @@ const routes = [
     path: '/dashboard',
     element: <ProtectedRoute>
                     <Dashboard/>
-          </ProtectedRoute>
+         </ProtectedRoute>
   }
   
 ];
