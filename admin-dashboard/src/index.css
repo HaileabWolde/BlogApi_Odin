@@ -1,1 +1,10 @@
 @import "tailwindcss";
+:root {
+  --bg-primary: #faf9f7;      /* warm off-white — Claude's bg */
+  --bg-surface: #ffffff;      /* article card */
+  --text-primary: #1a1a1a;    /* near black */
+  --text-secondary: #6b7280;  /* muted */
+  --text-body: #374151;       /* article body text */
+  --border: #e5e3df;          /* warm border */
+  --accent: #7c3aed;          /* same purple ties both sites together */
+}
