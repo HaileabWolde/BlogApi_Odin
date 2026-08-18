@@ -43,10 +43,12 @@ async function loginUser(req, res, next){
         const user = await db.findUser(username)
         if(!user){
                 throw new AppError(`couldn't find user`, 404)
+                
                 }
          const match = await bcrypt.compare(password, user.password)
          if (!match) {
             throw new AppError("Invalid username or password", 401)
+           
         }
         
         const tokenObject = utils.issueJWT(user)

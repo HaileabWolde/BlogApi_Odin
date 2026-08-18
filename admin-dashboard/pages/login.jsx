@@ -1,14 +1,35 @@
-import { useState } from "react"
+import { useState} from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
 function Login() {
   //const [count, setCount] = useState(0)
   const [formData, setFormData] = useState({
     username: '',
     password: ''
   })
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(formData)
+const [error, setError] = useState('')
+const navigate = useNavigate()
 
+async function  handleSubmit (e) {
+   e.preventDefault()
+    setError('')
+
+   try{
+      const response = await axios.post('http://localhost:3000/login', formData)
+    
+      console.log(response.data)
+   }
+   catch(err){
+   const message =
+      err.response?.data?.msg ||
+      err.response?.data?.message ||
+      err.message ||
+      'Something went wrong'
+
+    setError(message)
+    console.error(err) // useful while debugging
+   }
+   
   }
 
   
@@ -20,6 +41,12 @@ const handleInputChange = (e) => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#faf9f7]">
       <div className="bg-white/70 backdrop-blur-xl border border-white/40 rounded-3xl p-8 sm:p-10 shadow-xl shadow-black/5 w-full max-w-md mx-4">
+        <h1 className="text-[red] text-xl font-serif font-semibold mb-6">Admin login</h1>
+        {error && (
+                    <p className="text-red-400 text-sm mb-4 bg-red-400/10 px-3 py-2 rounded-lg">
+                        {error}
+                    </p>
+                )}
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label
@@ -63,7 +90,6 @@ const handleInputChange = (e) => {
 
           <button
             type="submit"
-            onClick={handleSubmit}
             className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 
                        transition-all duration-200 py-3.5 rounded-2xl font-semibold text-lg text-white 
                        shadow-md shadow-blue-600/25 hover:shadow-lg hover:shadow-blue-600/30 
