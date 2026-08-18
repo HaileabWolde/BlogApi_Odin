@@ -1,9 +1,21 @@
+import { useState } from "react"
 function Login() {
   //const [count, setCount] = useState(0)
-
-  const handleSubmit = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: ''
+  })
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(formData)
 
   }
+
+  
+const handleInputChange = (e) => {
+ const { name, value } = e.target;
+ setFormData({...formData, [name]: value});
+ };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-[#faf9f7]">
@@ -19,6 +31,8 @@ function Login() {
             <input
               id="username"
               name="username"
+              value={formData.username}
+              onChange={handleInputChange}
               type="text"
               placeholder="Enter username"
               className="w-full border-2 border-[#54ACDB]/80 rounded-2xl px-5 py-3.5 text-gray-800 placeholder-gray-400 
@@ -38,6 +52,8 @@ function Login() {
               id="password"
               name="password"
               type="password"
+              value={formData.password}
+              onChange={handleInputChange}
               placeholder="Enter password"
               className="w-full border-2 border-[#54ACDB]/80 rounded-2xl px-5 py-3.5 text-gray-800 placeholder-gray-400 
                          bg-white/50 focus:outline-none focus:border-[#54ACDB] focus:ring-4 focus:ring-[#54ACDB]/15 
@@ -47,6 +63,7 @@ function Login() {
 
           <button
             type="submit"
+            onClick={handleSubmit}
             className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 
                        transition-all duration-200 py-3.5 rounded-2xl font-semibold text-lg text-white 
                        shadow-md shadow-blue-600/25 hover:shadow-lg hover:shadow-blue-600/30 
