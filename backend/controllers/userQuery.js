@@ -1,4 +1,5 @@
 const passport = require("passport");
+const bcrypt = require('bcryptjs')
 const db = require("../db/userDB.js")
 const utils = require('../lib/utils.js')
 const AppError = require('../appError/AppError.js');
@@ -21,6 +22,7 @@ async function loginUser(req, res, next){
         if(!user){
                 throw new AppError(`couldn't find user`, 404)
                 }
+         const match = await bcrypt.compare(password, user.password)
          if (!match) {
             throw new AppError("Invalid username or password", 401)
         }
