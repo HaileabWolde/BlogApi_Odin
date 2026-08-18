@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 const db = require("../db/userDB.js")
 const utils = require('../lib/utils.js')
 const AppError = require('../appError/AppError.js');
+const { Prisma } = require("../generated/prisma/index.js");
 async function signUser (req, res, next){
     const {username, password} = req.body
     try {
@@ -10,23 +11,31 @@ async function signUser (req, res, next){
         res.json({success:true, user: user})
     }
     catch(error){
-        console.log('error', error)
-        next(error)
+       console.log("Caught error:", error);
+  if (error.code === "P2002") {
+    return next(new AppError("Username already taken", 409));
+  }
+
+  next(error);
     }
 
 }
 
-async function signAdminUser(req, res, next){
-    const {username, password} = req.body
-    const role =  "ADMIN"
-    try{
-        const adminUser = await db.createUser(username, password, role)
-        res.json({success:true, user: adminUser})
-    }
-    catch(error){
-        console.log('error', error)
-        next(error)
-    }
+async function signAdminUser(req, res, next) {
+  const { username, password } = req.body;
+  const role = "ADMIN";
+
+  try {
+    const adminUser = await db.createUser(username, password, role);
+    res.json({ success: true, user: adminUser });
+  } catch (error) {
+  // This is the most reliable way
+  if (error.code === "P2002") {
+    return next(new AppError("Username already taken", 409));
+  }
+
+  next(error);
+  }
 }
 async function loginUser(req, res, next){
     const {username, password} = req.body
