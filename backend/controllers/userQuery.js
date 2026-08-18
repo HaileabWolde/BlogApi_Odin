@@ -15,6 +15,19 @@ async function signUser (req, res, next){
     }
 
 }
+
+async function signAdminUser(req, res, next){
+    const {username, password} = req.body
+    const role =  "ADMIN"
+    try{
+        const adminUser = await db.createUser(username, password, role)
+        res.json({success:true, user: adminUser})
+    }
+    catch(error){
+        console.log('error', error)
+        next(error)
+    }
+}
 async function loginUser(req, res, next){
     const {username, password} = req.body
     try{
@@ -42,5 +55,6 @@ async function loginUser(req, res, next){
 }
 module.exports= {
     signUser,
-     loginUser
+     loginUser,
+     signAdminUser
 }
