@@ -1,6 +1,7 @@
 const passport = require("passport");
 const {Router}  = require("express");
 const {signUser, loginUser, signAdminUser} = require("../controllers/userQuery.js")
+const {newPost} = require("../controllers/postQuery.js")
 const utils = require('../lib/utils.js');
 const verifyAuthor = require("../middleware/verifyAuthor.js")
 
@@ -23,6 +24,7 @@ indexRouter.get('/protected', passport.authenticate('jwt', { session: false }), 
 indexRouter.post('/signup/admin', signAdminUser)
 indexRouter.post('/signup', signUser)
 indexRouter.post("/login",  loginUser)
+indexRouter.post('/api/posts/add', passport.authenticate('jwt', {session:false}), newPost)
 
 
   

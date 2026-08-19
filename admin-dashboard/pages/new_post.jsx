@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import Sidebar from "./aside"
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css'; // Import default layout theme
@@ -12,11 +13,20 @@ function New_Post (){
     const [error, setError]= useState('')
 
 /*event handlers*/
-       const handleSubmit = (e)=>{
+async function  handleSubmit(e){
     e.preventDefault()
-    console.log(formData)
+    const response = await axios.post('http://localhost:3000/api/posts/add' , 
+      formData,
+      { 
+        headers: 
+        { 'Authorization': `${localStorage.getItem('token')}` 
+      } })
+
+    console.log(response.data)
          
-    }
+ }
+
+
     const handleInputChange = (e) => {
  const { name, value } = e.target;
  setFormData({...formData, [name]: value});
