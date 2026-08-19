@@ -1,13 +1,12 @@
+import Sidebar from "./aside"
 function Dashboard() {
-  //const [count, setCount] = useState(0)
-
   return (
-    <div className="flex items-center justify-center h-screen bg-slate-100">
-      <h1 className="text-3xl font-bold text-blue-600 underline">
-       Hello Dashboard
-      </h1>
+    <div className="min-h-screen bg-[#0a0a0a] grid grid-cols-[220px_1fr]">
+      
+    <Sidebar/>
+
+      
     </div>
   )
 }
-
 export default Dashboard

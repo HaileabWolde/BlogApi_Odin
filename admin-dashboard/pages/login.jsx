@@ -18,6 +18,15 @@ async function  handleSubmit (e) {
       const response = await axios.post('http://localhost:3000/login', formData)
     
       const {token , role } = response.data
+      // Decode token payload
+    const decoded = JSON.parse(atob(token.split('.')[1]))
+        // Check if token is expired
+        
+    if (decoded.exp * 1000 < Date.now()) {
+        localStorage.removeItem('token')
+        return <Navigate to="/login" replace />
+    }
+
       if (role !== 'AUTHOR' && role !== 'ADMIN') {
                 // Valid user but not an author
                 setError('You are not authorized to access this dashboard')

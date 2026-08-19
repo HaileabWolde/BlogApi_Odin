@@ -4,6 +4,7 @@ import Login from '../pages/login.jsx';
 import ProtectedRoute from '../components/protectedRoute.jsx';
 import ErrorPage from "../errorPage/ErrorPage.jsx";
 import Dashboard from '../pages/dashboard.jsx';
+import New_Post from '../pages/new_post.jsx';
 const routes = [
   {
    path: "/", 
@@ -20,6 +21,13 @@ const routes = [
     element: <ProtectedRoute>
                     <Dashboard/>
          </ProtectedRoute>
+  },
+  {
+    path: '/posts/new',
+    element: <ProtectedRoute>
+                   <New_Post/>
+         </ProtectedRoute>
+            
   }
   
 ];
