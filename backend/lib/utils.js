@@ -10,12 +10,13 @@ const PRIV_KEY = fs.readFileSync(pathToKey, 'utf8');
 
 function issueJWT(user) {
   const _id = user.id;
-
+  const _role = user.role;
   const expiresIn = '7d';
 
   const payload = {
     sub: _id,
-    iat: Date.now()
+    iat: Date.now(),
+    role: _role
   };
 
   const signedToken = jsonwebtoken.sign(payload, PRIV_KEY, { expiresIn: expiresIn, algorithm: 'RS256' });

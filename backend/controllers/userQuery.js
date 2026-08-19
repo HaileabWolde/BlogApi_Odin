@@ -54,7 +54,8 @@ async function loginUser(req, res, next){
         const tokenObject = utils.issueJWT(user)
         
         res.status(200).json({ 
-            success: true, 
+            success: true,
+            role: user.role,
             token: tokenObject.token, 
             expiresIn: tokenObject.expires 
         })
