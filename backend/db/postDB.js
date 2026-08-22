@@ -1,11 +1,12 @@
 const prisma = require("../lib/prisma")
 
-async function create_Post(title, allTags, content, id){
+async function create_Post(title, allTags, content, id, isPublished){
     const new_Post = await prisma.post.create({
         data: {
           title: title,
           content: content,
           authorId: id,
+          published: isPublished,
           tags: {
        create: allTags.map(name => ({
         tag: {
