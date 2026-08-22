@@ -1,5 +1,11 @@
 const passport = require("passport");
 const {Router}  = require("express");
+const multer = require("multer")
+
+const uploadMiddleware = require("../config/uploadMiddleware.js");
+const upload = uploadMiddleware("Haileab");
+
+//
 const {signUser, loginUser, signAdminUser} = require("../controllers/userQuery.js")
 const {newPost} = require("../controllers/postQuery.js")
 const utils = require('../lib/utils.js');
@@ -24,7 +30,7 @@ indexRouter.get('/protected', passport.authenticate('jwt', { session: false }), 
 indexRouter.post('/signup/admin', signAdminUser)
 indexRouter.post('/signup', signUser)
 indexRouter.post("/login",  loginUser)
-indexRouter.post('/api/posts/add', passport.authenticate('jwt', {session:false}), newPost)
+indexRouter.post('/api/posts/add', passport.authenticate('jwt', {session:false}), upload.single("image"), newPost)
 
 
   
