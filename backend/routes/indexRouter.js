@@ -7,7 +7,7 @@ const upload = uploadMiddleware("Haileab");
 
 //
 const {signUser, loginUser, signAdminUser} = require("../controllers/userQuery.js")
-const {newPost} = require("../controllers/postQuery.js")
+const {newPost, findallPost} = require("../controllers/postQuery.js")
 const utils = require('../lib/utils.js');
 const verifyAuthor = require("../middleware/verifyAuthor.js")
 
@@ -27,6 +27,7 @@ indexRouter.get('/protected', passport.authenticate('jwt', { session: false }), 
     
     res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!", user: req.user});
 });
+indexRouter.get('/posts/all', passport.authenticate('jwt', { session: false }), findallPost)
 indexRouter.post('/signup/admin', signAdminUser)
 indexRouter.post('/signup', signUser)
 indexRouter.post("/login",  loginUser)

@@ -1,4 +1,5 @@
 const db = require("../db/postDB")
+const { post } = require("../lib/prisma")
 async function newPost (req, res, next){
        
         const {title, tags, content, published} = req.body
@@ -20,6 +21,26 @@ async function newPost (req, res, next){
         next(error)
     }
 }
+async function findallPost(req, res, next){
+    const {id} = req.user
+    try{
+        const allPost = await db.allPost(id)
+        const publishedPost = allPost.filter((post)=> post.published === true)
+        const draftPost = allPost.filter((post)=> post.published != true)
+
+        
+        res.json({
+            allPost: allPost,
+            publishedPost: publishedPost,
+            draftPost: draftPost
+        })
+    }
+    catch(error){
+        console.log("error", error)
+        next(error)
+    }
+}
 module.exports = {
-    newPost
+    newPost,
+    findallPost
 }

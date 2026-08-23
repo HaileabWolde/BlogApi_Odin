@@ -22,7 +22,15 @@ async function create_Post(title, allTags, content, id, isPublished, imagePath){
     })
     return new_Post
 }
-
+async function allPost(id){
+    const allPost = await prisma.post.findMany({
+        where: {
+            authorId: id
+        }
+    })
+    return allPost
+}
 module.exports = {
-    create_Post
+    create_Post,
+    allPost
 }
