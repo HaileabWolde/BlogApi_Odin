@@ -1,8 +1,9 @@
 import axios from "axios"
 import Sidebar from "./aside"
 import { useState, useEffect } from "react"
-
+import { Link } from "react-router-dom"
 function Dashboard() {
+
 
   const [posts, setPosts] = useState(0)
   const [drafts, setDrafts] = useState(0)
@@ -102,7 +103,10 @@ const [loading, setLoading] = useState(true)
                           </td>
                         <td className="px-5 py-4">
                               <div className="flex gap-3">
-                                   <button className="text-[#555] hover:text-white text-xs transition-colors">Edit</button>
+                                   <button className="text-[#555] hover:text-white text-xs transition-colors">
+                                <Link to={`/posts/edit/${post.id}`}>Edit</Link>
+                                   
+                                   </button>
                                    <button className="text-[#555] hover:text-red-400 text-xs transition-colors">Delete</button>
                                  <button className={`text-xs transition-colors ${
                                         post.published 

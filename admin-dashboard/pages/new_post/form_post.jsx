@@ -1,34 +1,54 @@
  import axios from 'axios';
+ import { useNavigate, useParams } from 'react-router-dom';
+ import { useEffect } from 'react';
  import ReactQuill from 'react-quill-new';
  import 'react-quill-new/dist/quill.snow.css'; // Import default layout theme
 
  function Form_post({formData, setFormData, error, setError}){
-    /*event handlers*/
-async function  handleSubmit(e, draft){
   
-    e.preventDefault()
-   const isPublished = draft === "published";
-   const dataPayload = new FormData()
-   dataPayload.append('title', formData.title)
-   dataPayload.append('tags', formData.tags)
-   dataPayload.append('content', formData.content)
-   dataPayload.append('published', isPublished)
-   
-  if(formData.image){
-    dataPayload.append('image', formData.image)
-  }
-  
-    const response = await axios.post('http://localhost:3000/api/posts/add' , 
-     dataPayload,
-      { 
-        headers: 
-        { 'Authorization': `${localStorage.getItem('token')}` 
-      } })
+  const {id} = useParams()
 
-    console.log(response.data)
+
+  useEffect(()=> {
+    if(id && id != null){
+      console.log(id)
+    }
+  }, [id])
+
+  const navigate = useNavigate();
+    /*event handlers*/
+async function handleSubmit(e, draft) {
+    e.preventDefault()
     
-         
- }
+    try {
+        const isPublished = draft === "published"
+        const dataPayload = new FormData()
+        dataPayload.append('title', formData.title)
+        dataPayload.append('tags', formData.tags)
+        dataPayload.append('content', formData.content)
+        dataPayload.append('published', isPublished)
+        
+        if (formData.image) {
+            dataPayload.append('image', formData.image)
+        }
+
+        const response = await axios.post('http://localhost:3000/api/posts/add',
+            dataPayload,
+            {
+                headers: {
+                    'Authorization': `${localStorage.getItem('token')}`
+                }
+            }
+        )
+
+        console.log(response.data) // ← check what comes back
+        navigate('/dashboard')
+
+    } catch(error) {
+        console.log(error.response?.data) // ← this will tell you what's failing
+        setError(error.response?.data?.message || 'Something went wrong')
+    }
+}
 
 
     const handleInputChange = (e) => {
@@ -66,12 +86,13 @@ return (
                         <h1 className="text-white font-medium text-xl font-serif">New Post</h1>
                         <span className="flex gap-2">
                             <button 
+                            type="button"
                           onClick={(e)=> handleSubmit(e, "draft")}
                             className=" px-6 py-2 rounded-lg shadow-2xl bg-[#1f1f1f] text-white text-md cursor-pointer border-[#2a2a2a]  hover:scale-110">
                                     <p>Save Draft</p>
                             </button>
                             <button
-                          
+                           type="button"
                             onClick={(e)=> handleSubmit(e, "published")}
                             className="px-6 py-2 rounded-lg shadow-2xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-serif cursor-pointer hover:scale-110"
                             >

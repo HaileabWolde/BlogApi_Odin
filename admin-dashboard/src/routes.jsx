@@ -29,6 +29,12 @@ const routes = [
          </ProtectedRoute>
             
   }
+  ,{
+    path: '/posts/edit/:id',
+    element: <ProtectedRoute>
+      <New_Post/>
+    </ProtectedRoute>
+  }
   
 ];
 
