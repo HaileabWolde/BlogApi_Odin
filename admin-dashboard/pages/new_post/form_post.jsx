@@ -11,8 +11,30 @@
 
   useEffect(()=> {
     if(id && id != null){
-      console.log(id)
-    }
+      async function fetchSinglePost(){
+          try{
+            const response = await axios.get(`http://localhost:3000/posts/edit/${id}`,{
+                headers: { 'Authorization': `${localStorage.getItem('token')}` }
+            })
+            const{tags} = response.data.post[0]
+            const alltags =tags.map((item)=> {
+               const {name} = item.tag
+               return name
+            })
+            
+            setFormData((prev)=> ({
+              ...prev,
+                title: response.data.post[0].title,
+                tags: alltags.join(','),
+                content: response.data.post[0].content
+            }))
+           
+          }
+          catch(error){
+            console.log(error)
+          }
+      } fetchSinglePost()
+    } 
   }, [id])
 
   const navigate = useNavigate();
@@ -32,17 +54,19 @@ async function handleSubmit(e, draft) {
             dataPayload.append('image', formData.image)
         }
 
-        const response = await axios.post('http://localhost:3000/api/posts/add',
+       let response;
+      if (id) {
+          response = await axios.put(`http://localhost:3000/api/posts/edit/${id}`,
             dataPayload,
-            {
-                headers: {
-                    'Authorization': `${localStorage.getItem('token')}`
-                }
-            }
-        )
-
-        console.log(response.data) // ← check what comes back
-        navigate('/dashboard')
+            { headers: { 'Authorization': `${localStorage.getItem('token')}` } }
+      )
+    } else {
+            response = await axios.post('http://localhost:3000/api/posts/add',
+          dataPayload,
+          { headers: { 'Authorization': `${localStorage.getItem('token')}` } }
+      )
+    }
+      navigate('/dashboard')
 
     } catch(error) {
         console.log(error.response?.data) // ← this will tell you what's failing
@@ -83,7 +107,9 @@ return (
     <form 
             className="flex flex-col gap-4 p-20 w-full max-w-4xl justify-self-center ">
                 <div className="flex justify-between">
-                        <h1 className="text-white font-medium text-xl font-serif">New Post</h1>
+                      <h1 className="text-white font-medium text-xl font-serif">
+                               {id ? 'Edit Post' : 'New Post'}
+                      </h1>
                         <span className="flex gap-2">
                             <button 
                             type="button"
@@ -159,6 +185,7 @@ return (
             </div>
     <ReactQuill    
       theme="snow"
+         value={formData.content}  // ← add this
           placeholder="Write something amazing..."
          onChange={(value) =>
     setFormData((prev) => ({

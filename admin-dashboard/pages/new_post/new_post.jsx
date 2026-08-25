@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import Sidebar from "../aside"
 import Form_post from "./form_post";
 
