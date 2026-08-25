@@ -1,28 +1,32 @@
-import { useState } from "react";
-import axios from "axios";
-import Sidebar from "./aside"
-import ReactQuill from 'react-quill-new';
-import 'react-quill-new/dist/quill.snow.css'; // Import default layout theme
-function New_Post (){
-    const [formData, setFormData] = useState({
-        title: "",
-        tags: "",
-        content: "",
-        image: null
-    })
-    const [error, setError]= useState('')
+ import axios from 'axios';
+ import ReactQuill from 'react-quill-new';
+ import 'react-quill-new/dist/quill.snow.css'; // Import default layout theme
 
-/*event handlers*/
-async function  handleSubmit(e){
+ function Form_post({formData, setFormData, error, setError}){
+    /*event handlers*/
+async function  handleSubmit(e, draft){
+  
     e.preventDefault()
+   const isPublished = draft === "published";
+   const dataPayload = new FormData()
+   dataPayload.append('title', formData.title)
+   dataPayload.append('tags', formData.tags)
+   dataPayload.append('content', formData.content)
+   dataPayload.append('published', isPublished)
+   
+  if(formData.image){
+    dataPayload.append('image', formData.image)
+  }
+  
     const response = await axios.post('http://localhost:3000/api/posts/add' , 
-      formData,
+     dataPayload,
       { 
         headers: 
         { 'Authorization': `${localStorage.getItem('token')}` 
       } })
 
     console.log(response.data)
+    
          
  }
 
@@ -55,21 +59,20 @@ async function  handleSubmit(e){
     image: selectedFile
   }));
 };
-    return (
-        <div className="min-h-screen bg-[#0a0a0a] grid grid-cols-[220px_1fr]">
-            <Sidebar/>
-          
-            <form 
+return (
+    <form 
             className="flex flex-col gap-4 p-20 w-full max-w-4xl justify-self-center ">
                 <div className="flex justify-between">
                         <h1 className="text-white font-medium text-xl font-serif">New Post</h1>
                         <span className="flex gap-2">
                             <button 
+                          onClick={(e)=> handleSubmit(e, "draft")}
                             className=" px-6 py-2 rounded-lg shadow-2xl bg-[#1f1f1f] text-white text-md cursor-pointer border-[#2a2a2a]  hover:scale-110">
                                     <p>Save Draft</p>
                             </button>
                             <button
-                            onClick={handleSubmit}
+                          
+                            onClick={(e)=> handleSubmit(e, "published")}
                             className="px-6 py-2 rounded-lg shadow-2xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-serif cursor-pointer hover:scale-110"
                             >
                                 <p>Publish</p>
@@ -144,7 +147,7 @@ async function  handleSubmit(e){
   }
       />
             </form>
-        </div>
-    )
-}
-export default  New_Post 
+)
+ }
+ export default Form_post
+ 

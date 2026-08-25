@@ -1,4 +1,7 @@
 function Sidebar (){
+  const token = localStorage.getItem('token')
+  const decoded = JSON.parse(atob(token.split('.')[1]))
+
     return (
           <aside className="bg-[#111111] border-r border-[#2a2a2a] flex flex-col p-3">
         <div className="px-3 py-2 mb-6">
@@ -21,11 +24,11 @@ function Sidebar (){
         {/* User + logout */}
         <div className="border-t border-[#2a2a2a] pt-3 mt-3">
           <div className="flex items-center gap-2.5 px-3 py-2">
-            <div className="w-7 h-7 rounded-full bg-violet-600 flex items-center justify-center text-white text-xs font-medium">
-              H
+            <div className="w-7 h-7 rounded-full bg-violet-600 flex items-center justify-center text-white text-lg font-lg font-serif">
+              {decoded.username.charAt(0)}
             </div>
             <div>
-              <p className="text-[#ccc] text-xs font-medium">Haileab</p>
+              <p className="text-[#ccc] text-xs font-medium">{decoded.username.toUpperCase()}</p>
               <p className="text-[#555] text-xs">Author</p>
             </div>
           </div>
