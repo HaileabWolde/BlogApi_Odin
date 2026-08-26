@@ -1,9 +1,15 @@
 const db = require("../db/postDB")
+const AppError = require('../appError/AppError.js');
+
 
 async function newPost (req, res, next){
        
         const {title, tags, content, published} = req.body
        
+
+        if(!title || !tags){
+                return next(new AppError("Please enter A Title and Tags", 409))
+        }
         const allTags = tags.trim().toLowerCase().split(",")
        const {id} = req.user
 

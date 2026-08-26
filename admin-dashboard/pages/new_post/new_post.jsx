@@ -8,13 +8,14 @@ function New_Post (){
         tags: "",
         content: "",
         image: null,
-        published: false
+        published: false,
+        existingImageUrl: null
     })
     const [error, setError]= useState('')
 
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] grid grid-cols-[220px_1fr]">
+        <div className="min-h-screen bg-[#0a0a0a] grid grid-cols-[320px_1fr]">
             <Sidebar/>
             <Form_post
             formData={formData}

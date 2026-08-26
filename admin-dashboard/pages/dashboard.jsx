@@ -1,7 +1,7 @@
 import axios from "axios"
 import Sidebar from "./aside"
 import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link,  useNavigate } from "react-router-dom"
 function Dashboard() {
 
 
@@ -10,6 +10,9 @@ function Dashboard() {
   const [published, setPublished] = useState(0)
 
 const [loading, setLoading] = useState(true)
+ 
+
+//useEffect
   useEffect(() => {
     async function fetchAllPosts() {
         try {
@@ -27,6 +30,23 @@ const [loading, setLoading] = useState(true)
     }
     fetchAllPosts()
 }, [])
+
+
+ const navigate = useNavigate();
+
+async function handleDeletePost(id){
+  console.log(id)
+  try{
+  await axios.delete(`http://localhost:3000/api/posts/delete/${id}`,{
+                headers: { 'Authorization': `${localStorage.getItem('token')}` }
+            })
+    navigate('/')
+  }
+  catch(error){
+    console.log("Error" , error)
+  }
+}
+
   return (
     <div className="min-h-screen bg-[#0a0a0a] grid grid-cols-[320px_1fr]">
       
@@ -107,14 +127,11 @@ const [loading, setLoading] = useState(true)
                                 <Link to={`/posts/edit/${post.id}`}>Edit</Link>
                                    
                                    </button>
-                                   <button className="text-[#555] hover:text-red-400 text-xs transition-colors">Delete</button>
-                                 <button className={`text-xs transition-colors ${
-                                        post.published 
-                                        ? 'text-[#555] hover:text-yellow-400' 
-                                       : 'text-violet-500 hover:text-violet-400'
-                                     }`}>
-                                        {post.published ? 'Unpublish' : 'Publish'}
-                                   </button>
+                                   <button
+                                   type="button"
+                                   onClick={()=> handleDeletePost(post.id)} 
+                                   className="text-[#555] hover:text-red-400 text-xs transition-colors">Delete</button>
+                               
                              </div>
                     </td>
                 </tr>

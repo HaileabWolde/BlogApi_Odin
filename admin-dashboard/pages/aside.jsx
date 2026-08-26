@@ -1,7 +1,13 @@
+import { NavLink } from "react-router-dom";
 function Sidebar (){
   const token = localStorage.getItem('token')
   const decoded = JSON.parse(atob(token.split('.')[1]))
-
+   
+  // These must be defined inside the component
+  const baseClasses =
+    "flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors";
+  const inactiveClasses = "text-[#666] hover:text-white hover:bg-[#1a1a1a]";
+  const activeClasses = "bg-[#1f1f1f] text-white";
     return (
           <aside className="bg-[#111111] border-r border-[#2a2a2a] flex flex-col p-3">
         <div className="px-3 py-2 mb-6">
@@ -10,15 +16,32 @@ function Sidebar (){
         </div>
 
         <nav className="flex flex-col gap-0.5 flex-1">
-          <a href="/dashboard" className="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-[#1f1f1f] text-white text-sm">
-            Posts
-          </a>
-          <a href="/posts/new" className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[#666] hover:text-white hover:bg-[#1a1a1a] text-sm transition-colors">
-            New post
-          </a>
-          <a href="/comments" className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-[#666] hover:text-white hover:bg-[#1a1a1a] text-sm transition-colors">
-            Comments
-          </a>
+          <NavLink
+          to="/dashboard"
+          className={({ isActive }) =>
+            `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`
+          }
+        >
+          Posts
+        </NavLink>
+
+        <NavLink
+          to="/posts/new"
+          className={({ isActive }) =>
+            `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`
+          }
+        >
+          New post
+        </NavLink>
+
+        <NavLink
+          to="/comments"
+          className={({ isActive }) =>
+            `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`
+          }
+        >
+          Comments
+        </NavLink>
         </nav>
 
         {/* User + logout */}

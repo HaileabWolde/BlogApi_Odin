@@ -26,7 +26,8 @@
               ...prev,
                 title: response.data.post[0].title,
                 tags: alltags.join(','),
-                content: response.data.post[0].content
+                content: response.data.post[0].content,
+                existingImageUrl: response.data.post[0].coverImageUrl  // ← add this
             }))
            
           }
@@ -50,18 +51,20 @@ async function handleSubmit(e, draft) {
         dataPayload.append('content', formData.content)
         dataPayload.append('published', isPublished)
         
-        if (formData.image) {
-            dataPayload.append('image', formData.image)
-        }
-
-       let response;
+       if (formData.image) {
+    dataPayload.append('image', formData.image)
+    } 
+    else if (formData.existingImageUrl) {
+    dataPayload.append('existingImageUrl', formData.existingImageUrl)  // ← add this
+  }
+      
       if (id) {
-          response = await axios.put(`http://localhost:3000/api/posts/edit/${id}`,
+        await axios.put(`http://localhost:3000/api/posts/edit/${id}`,
             dataPayload,
             { headers: { 'Authorization': `${localStorage.getItem('token')}` } }
       )
     } else {
-            response = await axios.post('http://localhost:3000/api/posts/add',
+          await axios.post('http://localhost:3000/api/posts/add',
           dataPayload,
           { headers: { 'Authorization': `${localStorage.getItem('token')}` } }
       )
