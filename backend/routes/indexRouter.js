@@ -7,7 +7,7 @@ const upload = uploadMiddleware("Haileab");
 
 //
 const {signUser, loginUser, signAdminUser} = require("../controllers/userQuery.js")
-const {newPost, findallPost, geteachPost,  updatePost} = require("../controllers/postQuery.js")
+const {newPost, findallPost, geteachPost,  updatePost, deletePost} = require("../controllers/postQuery.js")
 
 
 //authentication
@@ -40,6 +40,9 @@ indexRouter.get('/posts/all', passport.authenticate('jwt', { session: false }), 
 indexRouter.put('/api/posts/edit/:id', passport.authenticate('jwt', {session:false}),  upload.single("image"), updatePost)
 
 
+
+//delete
+indexRouter.delete('/api/posts/delete/:id', passport.authenticate('jwt', {session: false}), deletePost)
 
 //post
 indexRouter.post('/signup/admin', signAdminUser)

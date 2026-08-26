@@ -49,6 +49,23 @@ async function update_Post(id, title, allTags, content, isPublished, imagePath){
     })
     return updated_Post ;
 }
+
+async function deletePost(id){
+    
+    await prisma.postTag.deleteMany({
+        where: {
+            postId: id
+        }
+    })
+    const deletedPost = await prisma.post.delete({
+        where: {
+                 id: id
+        }
+       
+    })
+    return deletedPost
+}
+
 async function allPost(id){
     const allPost = await prisma.post.findMany({
         where: {
@@ -77,6 +94,7 @@ async function geteachPost(id) {
 module.exports = {
     create_Post,
     update_Post,
+    deletePost,
     allPost,
     geteachPost
 }

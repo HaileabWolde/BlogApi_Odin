@@ -48,6 +48,22 @@ async function updatePost(req, res, next){
     }
 
 }
+async function deletePost(req, res, next){
+    const {id} = req.params
+
+     const _id = parseInt(id)
+
+    try{
+        await db.deletePost(_id)
+        res.json({
+            message: "deleted successfully"
+        })
+    }
+    catch(error){
+        console.log("Caughe Error". error)
+        next(error)
+    }
+}
 async function findallPost(req, res, next){
     const {id} = req.user
     try{
@@ -86,6 +102,7 @@ async function geteachPost(req, res, next){
 module.exports = {
     newPost,
     updatePost,
+    deletePost,
     findallPost,
     geteachPost,
 }
