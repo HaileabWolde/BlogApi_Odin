@@ -18,7 +18,7 @@ const options = {
 const strategy = (new JwtStrategy(options, async function(jwt_payload, done) {
         
        try {
-                 console.log(jwt_payload);
+               
 
                  // Prisma version of finding the user
                  const user = await prisma.user.findUnique({
