@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react"
-import axios from "axios"
+import axios, { all } from "axios"
 
 function Home(){
 
     const [loading, setLoading] = useState(true)
+    const [allPost, setPost] = useState(null)
     useEffect(()=>{
        async function fetchAllPosts() {
         try {
             const response = await axios.get('http://localhost:3000/posts/allPost')
-            console.log(response.data)       
+            console.log(response.data)   
+            setPost(response.data.allPost)    
         } catch(error) {
             console.log(error)
         } finally {
@@ -52,6 +54,72 @@ function Home(){
                 Written from Addis Ababa.
                </p>
             </div>
+            <main
+           className="max-w-6xl mx-auto py-8 flex flex-col"
+            >
+                {
+                    allPost && allPost.map((post)=> {
+                        const {content, coverImageUrl, createdAt, title, tags, author} = post
+                        return (
+                            <div
+                            key={post.id} 
+                           className="grid grid-cols-[1fr_280px] gap-8 py-6 border-b border-[#e5e3df]">
+                                <div
+                                className="flex flex-col gap-4 justify-center"
+                                >
+                                         <span
+                                    className="flex gap-4"
+                                    >
+                                        {
+                                            tags.map((singletag)=> {
+                                                const {tag} = singletag
+                                                return (
+                                                    <p
+                                                 key={singletag.tagId}
+                                                    className="text-sm font-serif text-[#7c3aed]"
+                                                    >
+                                                        {tag.name.toLowerCase()                         
+                                                            .split(' ')                            
+                                                            .map(word => word.charAt(0).toUpperCase() + word.slice(1)) 
+                                                        .join(' ')  }
+                                                    </p>
+                                                )
+                                            })
+                                        }
+                                    </span>
+                                    <h1 className="text-xl font-bold font-serif text-[#1a1a1a]">{title}</h1>
+                                    <div className="flex gap-4 items-center">
+                                             <div className="w-8 h-8 rounded-full bg-violet-600 flex items-center justify-center text-white text-lg font-lg font-serif">
+                                            {author.username.charAt(0)}
+                                              </div>
+                                              <p
+                                              className="text-md font-serif text-[#666]"
+                                              >
+                                                {author.username}
+                                              </p>
+                                              <p
+                                              className="text-md font-serif text-[#666]"
+                                              >
+                                                 {new Date(createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric',  year: 'numeric'})}
+                                              </p>
+                                    </div>
+                                    
+                                </div>
+                                
+                                     {coverImageUrl ? (
+                                            <img 
+                                         src={coverImageUrl}
+                                        alt={title}
+                                         className="w-full h-48 object-cover rounded-xl"
+                                             />
+                                    ) : null}
+                                    
+                               
+                            </div>
+                        )
+                    })
+                }
+            </main>
 
         </div>
     )
