@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import {Link} from "react-router-dom"
-
+import Aside from "./aside"
 function Home(){
 
     const [loading, setLoading] = useState(true)
@@ -27,22 +27,7 @@ function Home(){
 }
     return (
         <div className="min-h-screen bg-[#faf9f7] p-8">
-            <header
-            className="w-full max-w-7xl mx-auto flex justify-between items-center py-4 border-b-2 border-[#e5e3df]"
-            >
-                <h1 className="font-serif font-semibold">DevBlog</h1>
-                <span className="flex gap-4 items-center cursor-pointer">
-                    <p className="text-md font-serif text-[#666] ">Posts</p>
-                    <p className="text-md font-serif text-[#666] ">Tags</p>
-                    <button
-                    type="button"
-                    className="bg-[#1a1a1a] text-white px-4 py-1 rounded-lg shadow-2xl font-serif"
-                    >
-                        Sign In
-                    </button>
-                </span>
-
-            </header>
+            <Aside/>
             <div
             className="flex flex-col items-center text-center gap-4 p-8 border-b-2 border-[#e5e3df]"
             >
