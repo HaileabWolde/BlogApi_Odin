@@ -7,9 +7,9 @@ function Aside(){
             className="w-full max-w-7xl mx-auto flex justify-between items-center py-4 border-b-2 border-[#e5e3df]"
             >
                 <h1 className="font-serif font-semibold">DevBlog</h1>
-                { id ? <span>
-                    <p>Back To Posts</p>
-                </span>
+                { id ?
+                    <p className="text-sm font-serif text-[#666] cursor-pointer">Back To posts</p>
+               
                 :
                      <span className="flex gap-4 items-center cursor-pointer">
                     <p className="text-md font-serif text-[#666] ">Posts</p>
