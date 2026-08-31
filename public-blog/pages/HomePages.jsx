@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import axios, { all } from "axios"
+import axios from "axios"
+import {Link} from "react-router-dom"
 
 function Home(){
 
@@ -19,6 +20,11 @@ function Home(){
     }
     fetchAllPosts()
     }, [])
+    function stripHtml(html) {
+    const div = document.createElement('div')
+    div.innerHTML = html
+    return div.textContent || div.innerText || ''
+}
     return (
         <div className="min-h-screen bg-[#faf9f7] p-8">
             <header
@@ -61,7 +67,8 @@ function Home(){
                     allPost && allPost.map((post)=> {
                         const {content, coverImageUrl, createdAt, title, tags, author} = post
                         return (
-                            <div
+                            <Link
+                            to={`/post/${post.id}`}
                             key={post.id} 
                            className="grid grid-cols-[1fr_280px] gap-8 py-6 border-b border-[#e5e3df]">
                                 <div
@@ -88,6 +95,9 @@ function Home(){
                                         }
                                     </span>
                                     <h1 className="text-xl font-bold font-serif text-[#1a1a1a]">{title}</h1>
+                                    <p className="text-[#6b7280] text-sm font-serif line-clamp-2">
+                                            {stripHtml(content).slice(0, 150)}...
+                                            </p>
                                     <div className="flex gap-4 items-center">
                                              <div className="w-8 h-8 rounded-full bg-violet-600 flex items-center justify-center text-white text-lg font-lg font-serif">
                                             {author.username.charAt(0)}
@@ -97,6 +107,7 @@ function Home(){
                                               >
                                                 {author.username}
                                               </p>
+                                             
                                               <p
                                               className="text-md font-serif text-[#666]"
                                               >
@@ -115,7 +126,7 @@ function Home(){
                                     ) : null}
                                     
                                
-                            </div>
+                            </Link>
                         )
                     })
                 }
