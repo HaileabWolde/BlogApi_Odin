@@ -11,6 +11,12 @@ function stripHtml(html) {
 
 function DetailPage(){
     const navigate = useNavigate()
+    const token = localStorage?.getItem('token')
+    let payload = null
+ if (token && token.split('.')[1]) {
+   payload = JSON.parse(atob(token.split('.')[1]));
+  // ... your routing or guard logic
+}
     const {id} = useParams()
     const [post, setPost] = useState(null)
     const [comment, setComment] = useState('')
@@ -158,14 +164,18 @@ function DetailPage(){
                             className="w-full bg-[#faf9f7] border border-[#e5e3df] rounded-lg px-4 py-3 text-[#374151] text-sm font-serif placeholder-[#d1d5db] focus:outline-none focus:border-violet-400 resize-none transition-colors"
                         />
                         <div className="flex justify-between items-center mt-3">
-                            <p className="text-[#9ca3af] text-xs font-serif">Sign in to comment</p>
-                            <button
+                            {
+                                payload ? 
+                                 <button
                                 type="button"
                                 onClick={(event)=>handleComment(event)}
                                 className="bg-[#1a1a1a] hover:bg-[#333] text-white px-5 py-2 rounded-lg text-sm font-serif transition-colors cursor-pointer"
                             >
                                 Post comment
-                            </button>
+                            </button>:  <p className="text-[#9ca3af] text-xs font-serif">Sign in to comment</p>
+                            }
+                            
+                           
                         </div>
                     </div>
                 </div>

@@ -14,12 +14,12 @@ function Aside(){
                      <span className="flex gap-4 items-center cursor-pointer">
                     <p className="text-md font-serif text-[#666] ">Posts</p>
                     <p className="text-md font-serif text-[#666] ">Tags</p>
-                    <button
-                    type="button"
-                    className="bg-[#1a1a1a] text-white px-4 py-1 rounded-lg shadow-2xl font-serif"
+                    <Link
+                    to="/login"
+                    className="bg-[#1a1a1a] text-white px-4 py-1 rounded-lg shadow-2xl font-serif cursor-pointer"
                     >
                         Sign In
-                    </button>
+                    </Link>
                 </span>
                 }
                
