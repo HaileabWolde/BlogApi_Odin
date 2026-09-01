@@ -1,12 +1,12 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 function Aside(){
     const {id} = useParams()
 
     return (
         <header
-            className="w-full max-w-7xl mx-auto flex justify-between items-center py-4 border-b-2 border-[#e5e3df]"
+            className="sticky top-0 bg-[#faf9f7] border-b border-[#e5e3df] px-8 py-8 flex justify-between items-center z-10"
             >
-                <h1 className="font-serif font-semibold">DevBlog</h1>
+                  <Link to="/" className="text-[#1a1a1a] font-semibold font-serif text-lg no-underline">✦ DevBlog</Link>
                 { id ?
                     <p className="text-sm font-serif text-[#666] cursor-pointer">Back To posts</p>
                

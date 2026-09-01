@@ -26,7 +26,7 @@ function Home(){
     return div.textContent || div.innerText || ''
 }
     return (
-        <div className="min-h-screen bg-[#faf9f7] p-8">
+        <div className="min-h-screen bg-[#faf9f7]">
             <Aside/>
             <div
             className="flex flex-col items-center text-center gap-4 p-8 border-b-2 border-[#e5e3df]"
@@ -46,7 +46,7 @@ function Home(){
                </p>
             </div>
             <main
-           className="max-w-6xl mx-auto py-8 flex flex-col"
+           className="max-w-7xl mx-auto py-8 flex flex-col"
             >
                 {
                     allPost && allPost.map((post)=> {

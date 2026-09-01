@@ -1,6 +1,6 @@
-import Aside from "./aside";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function stripHtml(html) {
@@ -10,8 +10,10 @@ function stripHtml(html) {
 }
 
 function DetailPage(){
+    const navigate = useNavigate()
     const {id} = useParams()
     const [post, setPost] = useState(null)
+    const [comment, setComment] = useState('')
     const [loading, setLoading] = useState(true)
 
     useEffect(()=>{
@@ -28,6 +30,22 @@ function DetailPage(){
         }
         fetchPost()
     }, [id])
+
+    ///handle comment submission
+    async function  handleComment(event){
+        event.preventDefault()
+
+        try{
+            await axios.post(`http://localhost:3000/post/${id}/comment/add`, 
+                {comment},
+                  { headers: { 'Authorization': `${localStorage.getItem('token')}` } }
+            )
+            navigate('/')
+        }   
+        catch(error){
+            console.log("error", error)
+        }
+    }
 
     if (loading) return (
         <div className="min-h-screen bg-[#faf9f7] flex items-center justify-center">
@@ -133,12 +151,17 @@ function DetailPage(){
                         <textarea
                             placeholder="Write your comment..."
                             rows={4}
+                            value={comment}
+                            onChange={(e)=> {
+                                setComment(e.target.value)
+                            }}
                             className="w-full bg-[#faf9f7] border border-[#e5e3df] rounded-lg px-4 py-3 text-[#374151] text-sm font-serif placeholder-[#d1d5db] focus:outline-none focus:border-violet-400 resize-none transition-colors"
                         />
                         <div className="flex justify-between items-center mt-3">
                             <p className="text-[#9ca3af] text-xs font-serif">Sign in to comment</p>
                             <button
                                 type="button"
+                                onClick={(event)=>handleComment(event)}
                                 className="bg-[#1a1a1a] hover:bg-[#333] text-white px-5 py-2 rounded-lg text-sm font-serif transition-colors cursor-pointer"
                             >
                                 Post comment
