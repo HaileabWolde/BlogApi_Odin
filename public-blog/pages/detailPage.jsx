@@ -12,7 +12,7 @@ function stripHtml(html) {
 function DetailPage(){
     const navigate = useNavigate()
     const token = localStorage?.getItem('token')
-    let payload = null
+    let payload 
  if (token && token.split('.')[1]) {
    payload = JSON.parse(atob(token.split('.')[1]));
   // ... your routing or guard logic

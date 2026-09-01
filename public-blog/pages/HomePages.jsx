@@ -3,7 +3,7 @@ import axios from "axios"
 import {Link} from "react-router-dom"
 import Aside from "./aside"
 function Home(){
-
+  
     const [loading, setLoading] = useState(true)
     const [allPost, setPost] = useState(null)
     useEffect(()=>{
