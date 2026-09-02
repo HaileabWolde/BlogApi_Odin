@@ -75,6 +75,56 @@ async function allPost(id){
     return allPost
 }
 
+async function getPost(id){
+    const Post = await prisma.post.findUnique({
+        where: {
+            id: id
+        },
+        include:{
+            author: {
+                select: {
+                    username: true
+                }
+            },
+             tags: {
+                include: {
+                        tag: true, // Hops from the PostTag record to get the final Tag data
+                },
+            },
+            comments:{
+                include: {
+                    author: {
+                        select: {
+                            username: true
+                        }
+                    }
+                }
+            }
+        }
+    })
+    return Post;
+}
+
+async function fetchallPost() {
+    const Posts = await prisma.post.findMany({
+         where: { published: true },
+         include: {
+            author: {
+            select: {
+                username: true  // only get what you need
+            }
+        },
+             tags: {
+                include: {
+                        tag: true, // Hops from the PostTag record to get the final Tag data
+                },
+            },
+    },
+    })
+    return Posts
+    
+}
+
 async function geteachPost(id) {
     const post = await prisma.post.findMany({
         where: {
@@ -94,7 +144,9 @@ async function geteachPost(id) {
 module.exports = {
     create_Post,
     update_Post,
+    getPost,
     deletePost,
     allPost,
-    geteachPost
+    geteachPost,
+    fetchallPost
 }

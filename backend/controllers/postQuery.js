@@ -29,7 +29,21 @@ async function newPost (req, res, next){
         next(error)
     }
 }
-
+async function getPost(req, res, next){
+    const {id} = req.params
+        const _id = parseInt(id)
+    try{
+          const Post = await db.getPost(_id)
+         return res.json({
+             Post: Post
+            })
+    }
+    catch(error){
+        console.log("error", error)
+        next(error)
+    }
+  
+}
 async function updatePost(req, res, next){
     const {id} = req.params
       const _id = parseInt(id)
@@ -70,6 +84,19 @@ async function deletePost(req, res, next){
         next(error)
     }
 }
+
+async function allPost(req, res, next){
+    try{
+        const allPost = await db.fetchallPost()
+        res.json({
+            allPost: allPost
+        })
+    }
+    catch(error){
+        console.log('error', Error)
+        next(error)
+    }
+}
 async function findallPost(req, res, next){
     const {id} = req.user
     try{
@@ -107,6 +134,8 @@ async function geteachPost(req, res, next){
 }
 module.exports = {
     newPost,
+    allPost,
+    getPost,
     updatePost,
     deletePost,
     findallPost,

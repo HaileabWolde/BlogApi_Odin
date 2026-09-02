@@ -25,7 +25,27 @@ async function findUser(username){
 })
  return user
 }
+
+async function deleteUser(id){
+    await prisma.post.deleteMany({
+         where: {
+            authorId: id
+        }
+    })
+    await prisma.comment.deleteMany({
+        where: {
+             authorId: id
+        }
+    })
+    await prisma.user.delete({
+         where: {
+                 id: id
+        }
+    })
+    return 
+}
 module.exports = {
     createUser,
-    findUser
+    findUser,
+    deleteUser
 }

@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const db = require("../db/userDB.js")
 const utils = require('../lib/utils.js')
 const AppError = require('../appError/AppError.js');
-const { Prisma } = require("../generated/prisma/index.js");
+
 async function signUser (req, res, next){
     const {username, password} = req.body
     try {
@@ -65,8 +65,24 @@ async function loginUser(req, res, next){
         next(error)
     }
 }
+
+async function deleteUser(req, res, next){
+    const {id} = req.params
+      const _id = parseInt(id)
+    try{
+        await db.deleteUser(_id)
+        return res.json({
+            success: true
+        })
+    }
+    catch(error){
+        console.log('error', error)
+        next(error)
+    }
+}
 module.exports= {
     signUser,
      loginUser,
-     signAdminUser
+     signAdminUser,
+     deleteUser
 }

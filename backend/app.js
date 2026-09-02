@@ -13,9 +13,9 @@ require('./config/passport')
 app.use(passport.initialize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173'
-}));
+app.use(cors(/*{
+    origin: process.env.CLIENT_URL || 'http://localhost:5173' || 'http://localhost:5174/'
+}*/));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/", indexRouter);
