@@ -35,7 +35,7 @@ const [loading, setLoading] = useState(true)
  const navigate = useNavigate();
 
 async function handleDeletePost(id){
-  console.log(id)
+ 
   try{
   await axios.delete(`http://localhost:3000/api/posts/delete/${id}`,{
                 headers: { 'Authorization': `${localStorage.getItem('token')}` }

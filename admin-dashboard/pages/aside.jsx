@@ -1,8 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { NavLink , useNavigate} from "react-router-dom";
 function Sidebar (){
+  const navigate = useNavigate()
+
   const token = localStorage.getItem('token')
-  const decoded = JSON.parse(atob(token.split('.')[1]))
-   
+  const decoded = JSON.parse(atob(token.split('.')[1])) 
+  
+  function handleLogout(){
+    localStorage.removeItem('token')
+    navigate('/login')
+  }
   // These must be defined inside the component
   const baseClasses =
     "flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm transition-colors";
@@ -55,7 +61,10 @@ function Sidebar (){
               <p className="text-[#555] text-xs">Author</p>
             </div>
           </div>
-          <button className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-red-400 text-sm w-full hover:bg-[#1a1a1a] transition-colors">
+          <button
+          type="button"
+          onClick={handleLogout} 
+          className="flex items-center gap-2.5 px-3 py-2 rounded-lg text-red-400 text-sm w-full hover:bg-[#1a1a1a] transition-colors cursor-pointer">
             Log out
           </button>
         </div>

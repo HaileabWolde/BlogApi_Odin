@@ -5,6 +5,7 @@ import ProtectedRoute from '../components/protectedRoute.jsx';
 import ErrorPage from "../errorPage/ErrorPage.jsx";
 import Dashboard from '../pages/dashboard.jsx';
 import New_Post from '../pages/new_post/new_post.jsx';
+import CommentPage from '../pages/commentPage.jsx';
 const routes = [
   {
    path: "/", 
@@ -33,6 +34,12 @@ const routes = [
     path: '/posts/edit/:id',
     element: <ProtectedRoute>
       <New_Post/>
+    </ProtectedRoute>
+  },
+  {
+    path: '/comments',
+    element: <ProtectedRoute>
+      <CommentPage/>
     </ProtectedRoute>
   }
   
