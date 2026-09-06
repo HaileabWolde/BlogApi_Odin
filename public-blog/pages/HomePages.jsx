@@ -26,7 +26,7 @@ function Home(){
     return div.textContent || div.innerText || ''
 }
     return (
-        <div className="min-h-screen bg-[#faf9f7]">
+        <div className="relative min-h-screen bg-[#faf9f7]">
             <Aside/>
             <div
             className="flex flex-col items-center text-center gap-4 p-8 border-b-2 border-[#e5e3df]"
@@ -55,7 +55,7 @@ function Home(){
                             <Link
                             to={`/post/${post.id}`}
                             key={post.id} 
-                           className="grid grid-cols-[1fr_280px] gap-8 py-6 border-b border-[#e5e3df]">
+                           className="flex flex-wrap px-4 gap-16 sm:grid sm:grid-cols-[1fr_280px] sm:gap-8 py-6 border-b border-[#e5e3df]">
                                 <div
                                 className="flex flex-col gap-4 justify-center"
                                 >
