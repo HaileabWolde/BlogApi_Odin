@@ -1,9 +1,12 @@
 import Sidebar from "./aside"
+import Header from "./Header";
+import Mobile_Responsvie from "./mobileResponsive";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios  from "axios";
 function CommentPage(){
     const navigate = useNavigate()
+     const [isOpen, setIsOpen] = useState(false);
     const[loading, setLoading] = useState(true)
     const [allcomment, setAllComment] = useState(null)
     console.log(allcomment)
@@ -42,8 +45,16 @@ async function handleDelete(event, id){
 }
 return (
     <div
-    className="min-h-screen bg-[#0a0a0a] grid grid-cols-[320px_1fr]"
+    className="min-h-screen bg-[#0a0a0a] grid grid-cols-1 sm:grid-cols-[320px_1fr]"
     >
+        <Header
+    isOpen={isOpen}
+   setIsOpen={setIsOpen}
+    />
+   <Mobile_Responsvie
+   isOpen={isOpen}
+   setIsOpen={setIsOpen}
+   />
         <Sidebar/>
         {
     allcomment ? (

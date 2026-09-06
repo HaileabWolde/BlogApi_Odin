@@ -1,10 +1,17 @@
 import axios from "axios"
 import Sidebar from "./aside"
+import Mobile_Responsvie from "./mobileResponsive"
+import Header from "./Header"
 import { useState, useEffect } from "react"
 import { Link,  useNavigate } from "react-router-dom"
+
 function Dashboard() {
+  const [isOpen, setIsOpen] = useState(false);
 
 
+ 
+
+//useState Values
   const [posts, setPosts] = useState(0)
   const [drafts, setDrafts] = useState(0)
   const [published, setPublished] = useState(0)
@@ -48,8 +55,15 @@ async function handleDeletePost(id){
 }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] grid grid-cols-[320px_1fr]">
-      
+    <div className="min-h-screen bg-[#0a0a0a] grid grid-cols-1 sm:grid-cols-[320px_1fr]">
+    <Header
+    isOpen={isOpen}
+   setIsOpen={setIsOpen}
+    />
+   <Mobile_Responsvie
+   isOpen={isOpen}
+   setIsOpen={setIsOpen}
+   />
     <Sidebar/>
 
       <div className="px-8 py-8 flex flex-col gap-8 w-full">
@@ -59,11 +73,12 @@ async function handleDeletePost(id){
                   <p className="text-[#555] text-sm mt-1 font-semibold">Manage and Publish Your Articles</p>
 
               </div>
-              <button
+              <Link
+              to="/posts/new"
               className="px-6 py-2.5 rounded-lg bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium cursor-pointer transition-colors"
               >
                   New Post
-              </button>
+              </Link>
           </div>
           <div className="grid grid-cols-3  gap-4 ">
               <div

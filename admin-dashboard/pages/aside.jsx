@@ -1,7 +1,10 @@
 import { NavLink , useNavigate} from "react-router-dom";
+
+
+
 function Sidebar (){
   const navigate = useNavigate()
-
+  
   const token = localStorage.getItem('token')
   const decoded = JSON.parse(atob(token.split('.')[1])) 
   
@@ -15,7 +18,7 @@ function Sidebar (){
   const inactiveClasses = "text-[#666] hover:text-white hover:bg-[#1a1a1a]";
   const activeClasses = "bg-[#1f1f1f] text-white";
     return (
-          <aside className="bg-[#111111] border-r border-[#2a2a2a] flex flex-col p-3">
+          <aside className=" hidden bg-[#111111] border-r border-[#2a2a2a] sm:flex flex-col p-3">
         <div className="px-3 py-2 mb-6">
           <p className="text-white font-medium text-sm">My blog</p>
           <p className="text-[#555] text-xs mt-1">Admin dashboard</p>
