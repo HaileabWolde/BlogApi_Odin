@@ -6,7 +6,7 @@ const passport = require('passport');
 const path = require('path');
 
 
-const pathToKey = path.join(__dirname, '..', 'id_rsa_pub.pem');
+const pathToKey =  process.env.RSA_PUBLIC_KEY.replace(/\\n/g, '\n'); //path.join(__dirname, '..', 'id_rsa_pub.pem');
 const PUB_KEY = fs.readFileSync(pathToKey, 'utf8');
 
 // At a minimum, you must pass the `jwtFromRequest` and `secretOrKey` properties
