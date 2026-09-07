@@ -7,7 +7,7 @@ function Header({isOpen, setIsOpen}){
 
     return (
         <header
-    className=" sm:hidden bg-[#111111] border-b border-[#2a2a2a] p-8 flex justify-between items-center"
+    className=" lg:hidden bg-[#111111] border-b border-[#2a2a2a] p-8 flex justify-between items-center"
     >
        <Link to="/" className="text-[white] font-semibold font-serif text-lg no-underline">✦ DevBlog</Link>
         <div

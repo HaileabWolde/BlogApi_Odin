@@ -55,11 +55,12 @@ async function handleDeletePost(id){
 }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] grid grid-cols-1 sm:grid-cols-[320px_1fr]">
+    <div className="min-h-screen  bg-[#0a0a0a] grid grid-cols-1 lg:grid-cols-[320px_1fr]">
     <Header
     isOpen={isOpen}
    setIsOpen={setIsOpen}
     />
+    
    <Mobile_Responsvie
    isOpen={isOpen}
    setIsOpen={setIsOpen}
@@ -80,7 +81,7 @@ async function handleDeletePost(id){
                   New Post
               </Link>
           </div>
-          <div className="grid grid-cols-3  gap-4 ">
+          <div className="flex flex-wrap  justify-center sm:grid sm:grid-cols-3  gap-4 ">
               <div
               className="border-2 bg-[#111111] border-[#2a2a2a]  p-6 text-gray-100 placeholder-[#666] rounded-lg flex flex-col gap-2"
               >

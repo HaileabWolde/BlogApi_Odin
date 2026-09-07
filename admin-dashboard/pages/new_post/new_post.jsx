@@ -17,7 +17,7 @@ function New_Post (){
 
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] grid grid-cols-1 sm:grid-cols-[320px_1fr]">
+        <div className="min-h-screen bg-[#0a0a0a] grid grid-cols-1 lg:grid-cols-[320px_1fr]">
             <Header
              isOpen={isOpen}
    setIsOpen={setIsOpen}
