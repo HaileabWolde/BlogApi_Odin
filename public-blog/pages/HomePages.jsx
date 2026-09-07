@@ -46,7 +46,7 @@ function Home(){
                </p>
             </div>
             <main
-           className="max-w-7xl mx-auto py-8 flex flex-col"
+           className="max-w-4xl mx-auto py-8 flex flex-col"
             >
                 {
                     allPost && allPost.map((post)=> {
@@ -55,7 +55,7 @@ function Home(){
                             <Link
                             to={`/post/${post.id}`}
                             key={post.id} 
-                           className="flex flex-wrap px-4 gap-16 sm:grid sm:grid-cols-[1fr_280px] sm:gap-8 py-6 border-b border-[#e5e3df]">
+                           className="flex flex-wrap px-4 gap-16 md:grid md:grid-cols-[1fr_280px] sm:gap-8 py-6 border-b border-[#e5e3df]">
                                 <div
                                 className="flex flex-col gap-4 justify-center"
                                 >

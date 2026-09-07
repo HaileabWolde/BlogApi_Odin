@@ -45,7 +45,7 @@ function TagPage(){
                 >
                     Find articles on topics you care about
                 </p>
-                <div className="grid grid-cols-3 gap-4 items-center mt-4">
+                <div className="flex flex-wrap sm:grid sm:grid-cols-3 gap-4 items-center mt-4">
                         {
                             tags.map((tag)=> {
                                 return (
