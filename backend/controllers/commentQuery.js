@@ -6,8 +6,12 @@ async function newComment(req, res, next){
     const post_id = parseInt(postid)
     const {id} = req.user
     try{
-        const new_comment = await db.createComment(comment,post_id, id)
-       return 
+        const new_Comment =  await db.createComment(comment,post_id, id)
+        res.json({
+            success: true,
+            new_Comment: new_Comment
+        })
+      
     }
     catch(error){
         console.log("Caught Errror:", error)
@@ -32,7 +36,7 @@ async function deleteComment(req, res, next){
     const _id = parseInt(id)
     try{
         await db.deleteComment(_id)
-      res.status(200).json({ message: "Comment deleted successfully" })
+     return  res.status(200).json({ message: "Comment deleted successfully" })
     }catch(error){
         console.log("error", error)
         next(error)

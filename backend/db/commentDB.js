@@ -8,8 +8,7 @@ async function createComment(text, postid, id){
             postId: postid
         }
     })
-    return new_Comment;
-
+  return new_Comment;
 }
 
 async function fetchAllComment(){
