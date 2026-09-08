@@ -2,7 +2,8 @@ import { useState} from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 function Login() {
-  //const [count, setCount] = useState(0)
+ const API = import.meta.env.VITE_API_URL
+ 
   const [isregister, setRegister] = useState(false)
   const [formData, setFormData] = useState({
     username: '',
@@ -26,7 +27,7 @@ async function handleSubmit(e) {
         return;
       }
 
-      response = await axios.post("http://localhost:3000/signup", formData);
+      response = await axios.post(`${API}/signup`, formData);
 
       // Clear the whole form after successful signup
       setFormData({
@@ -40,7 +41,7 @@ async function handleSubmit(e) {
       return;
     } else {
       // Login – only send username + password
-      response = await axios.post("http://localhost:3000/login", {
+      response = await axios.post(`${API}/login`, {
         username: formData.username,
         password: formData.password,
       });

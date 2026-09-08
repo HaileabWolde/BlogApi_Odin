@@ -5,6 +5,8 @@ import { useParams, Link} from "react-router-dom";
 import axios from "axios";
 
 function EachTagPage(){
+    const API = import.meta.env.VITE_API_URL
+ 
     const {id} = useParams()
     const [loading, setLoading] = useState(true)
     const [eachTag, setTag] = useState(null)
@@ -12,7 +14,7 @@ function EachTagPage(){
     useEffect(()=> {
         async function fetchTag() {
             try{
-                   const response = await axios.get(`http://localhost:3000/tag/${id}`)
+                   const response = await axios.get(`${API}/tag/${id}`)
                    setTag(response.data.tag)
             }
             catch(error){

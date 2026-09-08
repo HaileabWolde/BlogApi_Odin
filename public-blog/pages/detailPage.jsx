@@ -10,6 +10,8 @@ function stripHtml(html) {
 }
 
 function DetailPage(){
+    const API = import.meta.env.VITE_API_URL
+ 
     const navigate = useNavigate()
     const token = localStorage?.getItem('token')
     let payload 
@@ -25,7 +27,7 @@ function DetailPage(){
     useEffect(()=>{
         async function fetchPost(){
             try{
-                const response = await axios.get(`http://localhost:3000/post/${id}`)
+                const response = await axios.get(`${API}/post/${id}`)
                 setPost(response.data.Post)
             }
             catch(error){
@@ -42,7 +44,7 @@ function DetailPage(){
         event.preventDefault()
 
         try{
-            await axios.post(`http://localhost:3000/post/${id}/comment/add`, 
+            await axios.post(`${API}/post/${id}/comment/add`, 
                 {comment},
                   { headers: { 'Authorization': `${localStorage.getItem('token')}` } }
             )
@@ -66,7 +68,7 @@ function DetailPage(){
     )
 
     return (
-        <div className="min-h-screen bg-[#faf9f7]">
+        <div className="min-h-screen w-screen min-w-screen overflow-hidden bg-[#faf9f7]">
 
             {/* Navbar */}
             <nav className="sticky top-0 bg-[#faf9f7] border-b border-[#e5e3df] px-8 py-4 flex justify-between items-center z-10">
@@ -74,7 +76,7 @@ function DetailPage(){
                 <Link to="/" className="text-[#6b7280] text-sm font-serif hover:text-[#1a1a1a] transition-colors">← Back to posts</Link>
             </nav>
 
-            <article className="max-w-2xl mx-auto px-6 py-16">
+            <article className="max-w-2xl mx-auto px-6 py-8">
 
                 {/* Tags */}
                 <div className="flex gap-2 flex-wrap mb-6">
@@ -92,7 +94,7 @@ function DetailPage(){
                 </div>
 
                 {/* Title */}
-                <h1 className="text-3xl font-bold font-serif text-[#1a1a1a] leading-tight mb-6">
+                <h1 className="text-xl font-bold font-serif text-[#1a1a1a] leading-tight mb-6">
                     {post.title}
                 </h1>
 
@@ -115,13 +117,13 @@ function DetailPage(){
                     <img
                         src={post.coverImageUrl}
                         alt={post.title}
-                        className="w-full h-72 object-cover rounded-xl mb-12"
+                       className="w-full h-48 md:h-72 object-cover rounded-xl mb-12"
                     />
                 )}
 
                 {/* Article Body */}
                 <div
-                    className="prose prose-lg prose-gray max-w-none font-serif"
+                    className="prose prose-sm md:prose-lg prose-gray max-w-none font-serif"
                     dangerouslySetInnerHTML={{ __html: post.content }}
                 />
 

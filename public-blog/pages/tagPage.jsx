@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function TagPage(){
+    const API = import.meta.env.VITE_API_URL
+ 
     const [tags, setTags] = useState(null)
     const [loading, setLoading] = useState(true)
     useEffect(()=>{
         async function fetchalltags(){
             try{
-                 const response = await axios.get("http://localhost:3000/tags/alltags")
+                 const response = await axios.get(`${API}/tags/alltags`)
                  setTags(response.data.alltags)
             }
            catch(error){

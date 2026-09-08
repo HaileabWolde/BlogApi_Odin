@@ -6,11 +6,12 @@ import Aside from "./aside"
 function Home() {
   const [loading, setLoading] = useState(true)
   const [allPost, setPost] = useState(null)
-
+const API = import.meta.env.VITE_API_URL
+ 
   useEffect(() => {
     async function fetchAllPosts() {
       try {
-        const response = await axios.get("http://localhost:3000/posts/allPost")
+        const response = await axios.get(`${API}/posts/allPost`)
         console.log(response.data)
         setPost(response.data.allPost)
       } catch (error) {
@@ -29,7 +30,7 @@ function Home() {
   }
 
   return (
-    <div className="relative min-h-screen bg-[#faf9f7]">
+    <div className="relative min-h-screen overflow-hidden bg-[#faf9f7]">
       <Aside />
 
       {/* Hero section */}
@@ -50,7 +51,7 @@ function Home() {
         </p>
       </div>
 
-      <main className="max-w-4xl mx-auto py-8 flex flex-col">
+      <main className="max-w-7xl mx-auto py-8 flex flex-col">
         {/* Loading state */}
         {loading && (
           <p className="text-center text-[#666] font-serif py-16">
@@ -76,7 +77,7 @@ function Home() {
               <Link
                 to={`/post/${post.id}`}
                 key={post.id}
-                className="flex flex-wrap px-4 gap-16 md:grid md:grid-cols-[1fr_280px] sm:gap-8 py-6 border-b border-[#e5e3df]"
+               className="flex flex-col px-4 gap-4 md:grid md:grid-cols-[1fr_280px] md:gap-8 py-6 border-b border-[#e5e3df]"
               >
                 <div className="flex flex-col gap-4 justify-center">
                   <span className="flex gap-4">
