@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios  from "axios";
 function CommentPage(){
+
+      const API = import.meta.env.VITE_API_URL
+ 
     const navigate = useNavigate()
      const [isOpen, setIsOpen] = useState(false);
     const[loading, setLoading] = useState(true)
@@ -13,7 +16,7 @@ function CommentPage(){
     useEffect(()=>{ 
         async function fetchallComment(){
             try{
-                     const response = await axios.get('http://localhost:3000/allcoments',{
+                     const response = await axios.get(`${API}/allcoments`,{
                         headers: { 'Authorization': `${localStorage.getItem('token')}` }
                      })
                      setAllComment(response.data.allComment)
@@ -35,7 +38,7 @@ function CommentPage(){
 async function handleDelete(event, id){
     event.preventDefault();
     try{
-         await axios.delete(`http://localhost:3000/comment/delete/${id}`)
+         await axios.delete(`${API}/comment/delete/${id}`)
          navigate('/comments')
     }
     catch(error){

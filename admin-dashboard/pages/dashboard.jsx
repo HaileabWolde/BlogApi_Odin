@@ -7,8 +7,7 @@ import { Link,  useNavigate } from "react-router-dom"
 
 function Dashboard() {
   const [isOpen, setIsOpen] = useState(false);
-
-
+const API = import.meta.env.VITE_API_URL
  
 
 //useState Values
@@ -23,7 +22,7 @@ const [loading, setLoading] = useState(true)
   useEffect(() => {
     async function fetchAllPosts() {
         try {
-            const response = await axios.get('http://localhost:3000/posts/all', {
+            const response = await axios.get(`${API}/posts/all`, {
                 headers: { 'Authorization': `${localStorage.getItem('token')}` }
             })
             setPosts(response.data.allPost)
@@ -44,7 +43,7 @@ const [loading, setLoading] = useState(true)
 async function handleDeletePost(id){
  
   try{
-  await axios.delete(`http://localhost:3000/api/posts/delete/${id}`,{
+  await axios.delete(`${API}/api/posts/delete/${id}`,{
                 headers: { 'Authorization': `${localStorage.getItem('token')}` }
             })
     navigate('/')

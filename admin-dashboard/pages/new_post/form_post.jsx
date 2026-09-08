@@ -7,13 +7,13 @@
  function Form_post({formData, setFormData, error, setError}){
   
   const {id} = useParams()
-
+   const API = import.meta.env.VITE_API_URL
 
   useEffect(()=> {
     if(id && id != null){
       async function fetchSinglePost(){
           try{
-            const response = await axios.get(`http://localhost:3000/posts/edit/${id}`,{
+            const response = await axios.get(`${API}/posts/edit/${id}`,{
                 headers: { 'Authorization': `${localStorage.getItem('token')}` }
             })
             const{tags} = response.data.post[0]
@@ -59,12 +59,12 @@ async function handleSubmit(e, draft) {
   }
       
       if (id) {
-        await axios.put(`http://localhost:3000/api/posts/edit/${id}`,
+        await axios.put(`${API}/api/posts/edit/${id}`,
             dataPayload,
             { headers: { 'Authorization': `${localStorage.getItem('token')}` } }
       )
     } else {
-          await axios.post('http://localhost:3000/api/posts/add',
+          await axios.post(`${API}/api/posts/add`,
           dataPayload,
           { headers: { 'Authorization': `${localStorage.getItem('token')}` } }
       )

@@ -2,7 +2,9 @@ import { useState} from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
 function Login() {
-  //const [count, setCount] = useState(0)
+  
+  const API = import.meta.env.VITE_API_URL
+ 
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -15,7 +17,7 @@ async function  handleSubmit (e) {
     setError('')
 
    try{
-      const response = await axios.post('http://localhost:3000/login', formData)
+      const response = await axios.post(`${API}/login`, formData)
     
       const {token , role } = response.data
       // Decode token payload
@@ -24,7 +26,8 @@ async function  handleSubmit (e) {
    
     if (decoded.exp * 1000 < Date.now()) {
         localStorage.removeItem('token')
-        return <Navigate to="/login" replace />
+        navigate('/login')
+        
     }
 
       if (role !== 'AUTHOR' && role !== 'ADMIN') {
